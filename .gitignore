@@ -99,7 +99,7 @@ stat/
 # 数据集
 *.csv
 *.tsv
-*.json
+# *.json  # 注释掉，保留文档需要的JSON配置文件
 *.jsonl
 *.parquet
 *.h5
@@ -109,13 +109,13 @@ stat/
 *.npy
 *.npz
 
-# 模型文件
+# 模型文件（大文件）
 *.pth
 *.pt
 *.ckpt
 *.pb
-*.h5
-*.hdf5
+# *.h5     # 注释掉，可能有小的配置文件
+# *.hdf5   # 注释掉，可能有小的配置文件
 *.onnx
 *.tflite
 *.mlmodel
@@ -167,19 +167,51 @@ secrets.json
 .secrets
 
 # 实验结果和可视化
-experiments/
-results/
+# experiments/  # 注释掉，保留文档需要的实验结果
+# results/      # 注释掉，保留文档需要的结果
 plots/
 figures/
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-*.pdf
+# 注释掉图片文件忽略，保留文档需要的可视化图片
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.svg
+# *.pdf
 
 # 缓存目录
 .cache/
 cache/
 tmp/
 temp/ 
+
+# 忽略特定的大文件，但保留文档需要的文件
+# 忽略数据目录中的原始数据
+data/MNIST/
+data/mnist/
+
+# 忽略大的模型文件已在上面定义，不重复
+
+# 忽略临时的训练输出
+temp_*
+tmp_*
+
+# 忽略大的日志文件
+*.log
+
+# 但保留以下文档需要的文件：
+# - exp/experiments/*/result.json
+# - docs/*.md  
+# - *.png (可视化图表)
+# - README*.md
+# - best_model_attention_analysis_*/ (注意力分析结果)
+
+# 仍然忽略一些确实不需要的文件
+# 忽略原始MNIST数据文件
+data/MNIST/raw/
+data/MNIST/processed/
+
+# 忽略训练过程中的大模型检查点
+**/best_model.pth
+**/checkpoint_*.pth
+**/model_epoch_*.pth

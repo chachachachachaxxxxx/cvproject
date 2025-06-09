@@ -1,0 +1,26 @@
+{
+  "patch_sizes": [4, 7, 14],
+  "num_layers_list": [3, 6, 9],
+  "num_heads_list": [2, 4, 8],
+  "embed_dims": [64, 128],
+  "dropout_rates": [0.1, 0.2],
+  
+  "base_config": {
+    "img_size": 28,
+    "in_channels": 1,
+    "num_classes": 10,
+    "embed_dim": 64,
+    "mlp_dim": 128,
+    "dropout": 0.1
+  },
+  
+  "train_config": {
+    "batch_size": 256,
+    "learning_rate": 3e-4,
+    "weight_decay": 1e-4,
+    "epochs": 20,
+    "num_workers": 0,
+    "early_stopping_patience": 5,
+    "min_delta": 0.001
+  }
+} 

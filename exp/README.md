@@ -116,4 +116,153 @@ python quick_experiment.py
 如有问题，请参考：
 1. `README_experiment.md` - 详细使用文档
 2. `test_experiment.py` - 环境测试
-3. 实验生成的报告文件 
+3. 实验生成的报告文件
+
+# Experiment Runner and Visualizer
+
+这个项目包含两个主要组件：
+
+## 1. 实验运行器 (efficient_ablation_runner.py)
+
+负责运行实验并保存结果，不包含可视化功能，避免了中文字体问题。
+
+### 使用方法：
+
+```bash
+python efficient_ablation_runner.py
+```
+
+这将：
+- 加载 `efficient_ablation_config.json` 配置文件
+- 运行所有配置的实验
+- 保存结果到 `experiments/efficient_ablation_TIMESTAMP/` 目录
+- 生成基本的文本报告和数据文件
+
+### 输出文件：
+- `all_results.json` - 所有实验结果的JSON格式
+- `experiment_data.csv` - 实验数据的CSV格式，便于分析
+- `factor_effects.json` - 因子效应分析结果
+- `experiment_report.md` - 文本格式的实验报告
+
+## 2. 可视化工具 (experiment_visualizer.py)
+
+独立的可视化工具，读取实验结果并生成各种图表。
+
+### 使用方法：
+
+#### 方法1：直接使用可视化器
+```bash
+python experiment_visualizer.py --experiment-dir experiments/efficient_ablation_TIMESTAMP/
+```
+
+#### 方法2：使用便捷脚本
+```bash
+python run_visualization.py --experiment-dir experiments/efficient_ablation_TIMESTAMP/
+```
+
+#### 可选参数：
+- `--output-dir` - 指定可视化输出目录（默认为experiment-dir/visualizations）
+
+### 生成的可视化图表：
+
+1. **Overview Dashboard** (`overview_dashboard.png`)
+   - 实验结果总览
+   - 准确率分布、参数分析、效率指标
+
+2. **Ablation Analysis** (`ablation_analysis.png`)
+   - 各个超参数的消融分析
+   - 显示每个参数对性能的影响
+
+3. **Correlation Heatmap** (`correlation_heatmap.png`)
+   - 配置参数和性能指标的相关性矩阵
+
+4. **Performance Analysis** (`performance_analysis.png`)
+   - Pareto前沿分析
+   - 效率比较
+
+5. **Training Curves** (`training_curves.png`)
+   - 顶级实验的训练曲线
+
+6. **Summary Report** (`summary_report.png`)
+   - 高级总结和统计信息
+
+7. **HTML报告** (`index.html`)
+   - 包含所有图表的交互式HTML报告
+
+## 工作流程
+
+1. **运行实验**：
+   ```bash
+   cd exp/
+   python efficient_ablation_runner.py
+   ```
+
+2. **生成可视化**：
+   ```bash
+   python run_visualization.py --experiment-dir experiments/efficient_ablation_TIMESTAMP/
+   ```
+
+3. **查看结果**：
+   - 打开 `experiments/efficient_ablation_TIMESTAMP/visualizations/index.html`
+   - 或查看各个PNG图片文件
+
+## 特点
+
+### 实验运行器特点：
+- ✅ 无可视化依赖，避免字体警告
+- ✅ 高效内存管理
+- ✅ 自动保存实验结果
+- ✅ 支持早停和学习率调整
+- ✅ 详细的进度显示
+
+### 可视化工具特点：
+- ✅ 独立运行，不影响实验
+- ✅ 丰富的图表类型
+- ✅ 自动生成HTML报告
+- ✅ 支持Pareto分析
+- ✅ 所有图片都保存为文件
+
+## 依赖关系
+
+### 实验运行器依赖：
+```
+torch
+torchvision
+numpy
+pandas
+tqdm
+```
+
+### 可视化工具额外依赖：
+```
+matplotlib
+seaborn
+```
+
+## 故障排除
+
+1. **中文字体警告**：
+   - 现在已经解决，实验运行器不使用matplotlib
+
+2. **可视化图片不显示**：
+   - 确保安装了matplotlib和seaborn
+   - 所有图片都自动保存到文件，无需GUI
+
+3. **内存不足**：
+   - 实验运行器已优化内存使用
+   - 每个实验后自动清理GPU内存
+
+## 示例
+
+完整的使用示例：
+
+```bash
+# 1. 运行实验
+python efficient_ablation_runner.py
+
+# 2. 生成可视化（假设实验目录为 experiments/efficient_ablation_20231201_143022）
+python run_visualization.py --experiment-dir experiments/efficient_ablation_20231201_143022/
+
+# 3. 查看结果
+# 打开 experiments/efficient_ablation_20231201_143022/visualizations/index.html
+``` 

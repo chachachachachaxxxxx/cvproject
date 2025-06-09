@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experiment Visualization Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .card { border: 1px solid #ddd; border-radius: 8px; padding: 20px; }
+        .card img { width: 100%; height: auto; }
+        .card h3 { margin-top: 0; color: #333; }
+        .card p { color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Experiment Visualization Report</h1>
+        <p>Generated on: 2025-06-09 15:46:14</p>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <h3>Overview Dashboard</h3>
+            <img src="overview_dashboard.png" alt="Overview Dashboard">
+            <p>Comprehensive overview of all experiment results including accuracy distributions, parameter analysis, and efficiency metrics.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Ablation Analysis</h3>
+            <img src="ablation_analysis.png" alt="Ablation Analysis">
+            <p>Detailed analysis of individual hyperparameter effects on model performance.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Correlation Heatmap</h3>
+            <img src="correlation_heatmap.png" alt="Correlation Heatmap">
+            <p>Correlation matrix showing relationships between configuration parameters and performance metrics.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Performance Analysis</h3>
+            <img src="performance_analysis.png" alt="Performance Analysis">
+            <p>Pareto frontier analysis and efficiency comparisons across different model configurations.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Training Curves</h3>
+            <img src="training_curves.png" alt="Training Curves">
+            <p>Training progress visualization for the top performing experiments.</p>
+        </div>
+        
+        <div class="card">
+            <h3>Summary Report</h3>
+            <img src="summary_report.png" alt="Summary Report">
+            <p>High-level summary with best configurations, group comparisons, and experiment statistics.</p>
+        </div>
+    </div>
+</body>
+</html>

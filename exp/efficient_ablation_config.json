@@ -1,0 +1,256 @@
+{
+  "experiment_name": "高效消融实验设计",
+  "description": "使用正交设计和分层实验减少实验数量，从243个实验减少到约50个",
+  
+  "strategy": {
+    "type": "efficient_ablation",
+    "methods": [
+      "baseline_experiments",
+      "single_factor_ablation", 
+      "orthogonal_design",
+      "pareto_front_analysis"
+    ]
+  },
+  
+  "experiment_groups": {
+    "baseline": {
+      "description": "基线实验 - 使用中等参数配置",
+      "experiments": [
+        {
+          "name": "baseline",
+          "patch_size": 7,
+          "num_layers": 6,
+          "num_heads": 4,
+          "embed_dim": 64,
+          "batch_size": 64,
+          "dropout": 0.1
+        }
+      ]
+    },
+    
+    "patch_size_ablation": {
+      "description": "Patch Size单因子消融 - 固定其他参数，只变化patch_size",
+      "base_config": {
+        "num_layers": 6,
+        "num_heads": 4,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "patch_size",
+      "values": [4, 7, 14]
+    },
+    
+    "depth_ablation": {
+      "description": "网络深度单因子消融 - 固定其他参数，只变化num_layers",
+      "base_config": {
+        "patch_size": 7,
+        "num_heads": 4,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "num_layers",
+      "values": [3, 6, 9]
+    },
+    
+    "heads_ablation": {
+      "description": "注意力头数单因子消融 - 固定其他参数，只变化num_heads",
+      "base_config": {
+        "patch_size": 7,
+        "num_layers": 6,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "num_heads",
+      "values": [2, 4, 8]
+    },
+    
+    "embed_dim_ablation": {
+      "description": "嵌入维度单因子消融 - 固定其他参数，只变化embed_dim",
+      "base_config": {
+        "patch_size": 7,
+        "num_layers": 6,
+        "num_heads": 4,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "embed_dim",
+      "values": [32, 64, 128]
+    },
+    
+    "batch_size_ablation": {
+      "description": "批量大小单因子消融 - 固定其他参数，只变化batch_size",
+      "base_config": {
+        "patch_size": 7,
+        "num_layers": 6,
+        "num_heads": 4,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "batch_size",
+      "values": [64, 256, 1024]
+    },
+    
+    "learning_rate_ablation": {
+      "description": "学习率单因子消融 - 固定其他参数，只变化learning_rate",
+      "base_config": {
+        "patch_size": 7,
+        "num_layers": 6,
+        "num_heads": 4,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "learning_rate",
+      "values": [1e-4, 3e-4, 1e-3]
+    },
+    
+    "orthogonal_design": {
+      "description": "正交设计实验 - 使用L9(3^5)正交表，高效探索参数空间（包含学习率）",
+      "experiments": [
+        {"patch_size": 4, "num_layers": 3, "num_heads": 2, "embed_dim": 32, "batch_size": 64, "learning_rate": 1e-4, "dropout": 0.1},
+        {"patch_size": 4, "num_layers": 6, "num_heads": 4, "embed_dim": 64, "batch_size": 256, "learning_rate": 3e-4, "dropout": 0.15},
+        {"patch_size": 4, "num_layers": 9, "num_heads": 8, "embed_dim": 128, "batch_size": 1024, "learning_rate": 1e-3, "dropout": 0.2},
+        {"patch_size": 7, "num_layers": 3, "num_heads": 4, "embed_dim": 128, "batch_size": 1024, "learning_rate": 3e-4, "dropout": 0.1},
+        {"patch_size": 7, "num_layers": 6, "num_heads": 8, "embed_dim": 32, "batch_size": 64, "learning_rate": 1e-3, "dropout": 0.15},
+        {"patch_size": 7, "num_layers": 9, "num_heads": 2, "embed_dim": 64, "batch_size": 256, "learning_rate": 1e-4, "dropout": 0.2},
+        {"patch_size": 14, "num_layers": 3, "num_heads": 8, "embed_dim": 64, "batch_size": 256, "learning_rate": 1e-3, "dropout": 0.2},
+        {"patch_size": 14, "num_layers": 6, "num_heads": 2, "embed_dim": 128, "batch_size": 1024, "learning_rate": 1e-4, "dropout": 0.1},
+        {"patch_size": 14, "num_layers": 9, "num_heads": 4, "embed_dim": 32, "batch_size": 64, "learning_rate": 3e-4, "dropout": 0.15}
+      ]
+    },
+    
+    "extreme_configs": {
+      "description": "极端配置实验 - 测试参数边界",
+      "experiments": [
+        {
+          "name": "minimal_model",
+          "patch_size": 14,
+          "num_layers": 3,
+          "num_heads": 2,
+          "embed_dim": 32,
+          "batch_size": 256,
+          "dropout": 0.1
+        },
+        {
+          "name": "maximal_model",
+          "patch_size": 4,
+          "num_layers": 9,
+          "num_heads": 8,
+          "embed_dim": 128,
+          "batch_size": 64,
+          "dropout": 0.2
+        },
+        {
+          "name": "balanced_model",
+          "patch_size": 7,
+          "num_layers": 6,
+          "num_heads": 4,
+          "embed_dim": 64,
+          "batch_size": 256,
+          "dropout": 0.15
+        }
+      ]
+    },
+    
+    "efficiency_focused": {
+      "description": "效率导向实验 - 关注参数效率和计算效率",
+      "experiments": [
+        {
+          "name": "fast_inference",
+          "patch_size": 14,
+          "num_layers": 3,
+          "num_heads": 2,
+          "embed_dim": 64,
+          "batch_size": 256,
+          "dropout": 0.1
+        },
+        {
+          "name": "parameter_efficient",
+          "patch_size": 7,
+          "num_layers": 6,
+          "num_heads": 2,
+          "embed_dim": 32,
+          "batch_size": 256,
+          "dropout": 0.1
+        },
+        {
+          "name": "memory_efficient",
+          "patch_size": 14,
+          "num_layers": 6,
+          "num_heads": 4,
+          "embed_dim": 64,
+          "batch_size": 64,
+          "dropout": 0.1
+        }
+      ]
+    }
+  },
+  
+  "analysis_plan": {
+    "metrics": [
+      "accuracy",
+      "parameter_count",
+      "training_time",
+      "inference_time",
+      "memory_usage",
+      "flops",
+      "parameter_efficiency",
+      "computational_efficiency",
+      "learning_rate_sensitivity"
+    ],
+    
+    "comparisons": [
+      "single_factor_effects",
+      "interaction_effects",
+      "pareto_efficiency",
+      "statistical_significance",
+      "learning_rate_vs_batch_size_interaction"
+    ],
+    
+    "visualizations": [
+      "factor_importance_plot",
+      "pareto_front_plot",
+      "heatmap_correlation",
+      "radar_chart_comparison",
+      "efficiency_scatter_plot",
+      "learning_rate_effect_plot"
+    ]
+  },
+  
+  "base_config": {
+    "img_size": 28,
+    "in_channels": 1,
+    "num_classes": 10,
+    "mlp_ratio": 4,
+    "dropout": 0.1
+  },
+  
+  "train_config": {
+    "learning_rate": 3e-4,
+    "base_batch_size": 64,
+    "lr_scaling_factor": 0.5,
+    "max_learning_rate": 1e-3,
+    "weight_decay": 1e-4,
+    "epochs": 30,
+    "num_workers": 0,
+    "early_stopping_patience": 5,
+    "min_delta": 0.001,
+    "warmup_epochs": 3,
+    "scheduler": "cosine_annealing"
+  },
+  
+  "estimated_experiments": {
+    "baseline": 1,
+    "single_factor_ablations": 18,
+    "orthogonal_design": 9,
+    "extreme_configs": 3,
+    "efficiency_focused": 3,
+    "total": 34,
+    "original_full_factorial": 729,
+    "reduction_ratio": 0.047
+  }
+} 

@@ -1,0 +1,86 @@
+{
+  "patch_size": {
+    "effect_size": 0.10999999999999943,
+    "best_value": 4,
+    "all_values": [
+      4,
+      7,
+      14
+    ],
+    "all_accuracies": [
+      99.03,
+      98.92,
+      98.92
+    ]
+  },
+  "num_layers": {
+    "effect_size": 0.29000000000000625,
+    "best_value": 9,
+    "all_values": [
+      3,
+      6,
+      9
+    ],
+    "all_accuracies": [
+      98.72,
+      98.88,
+      99.01
+    ]
+  },
+  "num_heads": {
+    "effect_size": 0.2600000000000051,
+    "best_value": 8,
+    "all_values": [
+      2,
+      4,
+      8
+    ],
+    "all_accuracies": [
+      98.74,
+      98.9,
+      99.0
+    ]
+  },
+  "embed_dim": {
+    "effect_size": 1.7199999999999989,
+    "best_value": 128,
+    "all_values": [
+      32,
+      64,
+      128
+    ],
+    "all_accuracies": [
+      97.65,
+      98.92,
+      99.37
+    ]
+  },
+  "batch_size": {
+    "effect_size": 0.6700000000000017,
+    "best_value": 256,
+    "all_values": [
+      64,
+      256,
+      1024
+    ],
+    "all_accuracies": [
+      98.68,
+      98.84,
+      98.17
+    ]
+  },
+  "learning_rate": {
+    "effect_size": 1.1099999999999994,
+    "best_value": 0.001,
+    "all_values": [
+      0.0001,
+      0.0003,
+      0.001
+    ],
+    "all_accuracies": [
+      98.0,
+      98.81,
+      99.11
+    ]
+  }
+}

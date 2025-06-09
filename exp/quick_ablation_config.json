@@ -1,0 +1,134 @@
+{
+  "experiment_name": "快速消融实验测试",
+  "description": "快速测试版本，只运行关键实验",
+  "strategy": {
+    "type": "efficient_ablation",
+    "methods": [
+      "baseline_experiments",
+      "single_factor_ablation",
+      "orthogonal_design",
+      "pareto_front_analysis"
+    ]
+  },
+  "experiment_groups": {
+    "baseline": {
+      "description": "基线实验 - 使用中等参数配置",
+      "experiments": [
+        {
+          "name": "baseline",
+          "patch_size": 7,
+          "num_layers": 6,
+          "num_heads": 4,
+          "embed_dim": 64,
+          "batch_size": 64,
+          "dropout": 0.1
+        }
+      ]
+    },
+    "patch_size_ablation": {
+      "description": "Patch Size单因子消融 - 快速版",
+      "base_config": {
+        "num_layers": 6,
+        "num_heads": 4,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "patch_size",
+      "values": [
+        4,
+        7,
+        14
+      ]
+    },
+    "depth_ablation": {
+      "description": "网络深度单因子消融 - 快速版",
+      "base_config": {
+        "patch_size": 7,
+        "num_heads": 4,
+        "embed_dim": 64,
+        "batch_size": 64,
+        "dropout": 0.1
+      },
+      "variable": "num_layers",
+      "values": [
+        3,
+        6
+      ]
+    },
+    "extreme_configs": {
+      "description": "极端配置实验 - 快速版",
+      "experiments": [
+        {
+          "name": "minimal_model",
+          "patch_size": 14,
+          "num_layers": 3,
+          "num_heads": 2,
+          "embed_dim": 32,
+          "batch_size": 128,
+          "dropout": 0.1
+        },
+        {
+          "name": "balanced_model",
+          "patch_size": 7,
+          "num_layers": 6,
+          "num_heads": 4,
+          "embed_dim": 64,
+          "batch_size": 64,
+          "dropout": 0.15
+        }
+      ]
+    }
+  },
+  "analysis_plan": {
+    "metrics": [
+      "accuracy",
+      "parameter_count",
+      "training_time",
+      "inference_time",
+      "memory_usage",
+      "flops",
+      "parameter_efficiency",
+      "computational_efficiency"
+    ],
+    "comparisons": [
+      "single_factor_effects",
+      "interaction_effects",
+      "pareto_efficiency",
+      "statistical_significance"
+    ],
+    "visualizations": [
+      "factor_importance_plot",
+      "pareto_front_plot",
+      "heatmap_correlation",
+      "radar_chart_comparison",
+      "efficiency_scatter_plot"
+    ]
+  },
+  "base_config": {
+    "img_size": 28,
+    "in_channels": 1,
+    "num_classes": 10,
+    "mlp_ratio": 4,
+    "dropout": 0.1
+  },
+  "train_config": {
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "epochs": 15,
+    "num_workers": 0,
+    "early_stopping_patience": 3,
+    "min_delta": 0.001,
+    "warmup_epochs": 3,
+    "scheduler": "cosine_annealing"
+  },
+  "estimated_experiments": {
+    "baseline": 1,
+    "patch_size_ablation": 3,
+    "depth_ablation": 2,
+    "extreme_configs": 2,
+    "total": 8,
+    "original_full_factorial": 243,
+    "reduction_ratio": 0.033
+  }
+}
